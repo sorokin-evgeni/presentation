@@ -1,16 +1,84 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Presentation</title>
-</head>
-<body>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.png">
 
-</body>
+    <title>Jumbotron Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/main.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+  </body>
 </html>
-<script type="text/javascript" src="http://codeorigin.jquery.com/jquery-2.0.3.min.js"></script>
+
+<script type="text/javascript" src="js/jquery-2.0.3.js"></script>
 <script type="text/javascript" src="js/jade.js"></script>
-<script type="text/javascript" src="js/controller.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
 
 
-<script type="text/jade" src="templates/layout.jade" id="layout"></script>
+<script type="text/jade" id="layout">
+#wrap
+  .jumbotron
+    .container
+      h1 Hello, team!
+      p Here is sample of my code. It is a one page application for showing presentations. You can see two examples above.
+      p 
+        | In this project I used 
+        a(href="http://jquery.com/") jQuery 
+        | library, 
+        a(href="http://jade-lang.com/") jade 
+        | templates engine and 
+        a(href="http://getbootstrap.com/") Bootstrap 
+        | CSS Framework.
+      p Thank you for spent your time.
+  .container
+    .row
+      - for(var i in models) {
+        .col-lg-4
+          h2 #{models[i].name}
+          p #{models[i].description}
+          p
+            a.btn.btn-default(href="#{'#item/'+models[i].id}") View &raquo;  
+      - }
+    hr
+#footer
+  .container
+    p &copy; Sorokin Evgeny
+</script>
+
+<script type="text/jade" id="item">
+#wrap.container.presentation-nav
+  a.btn.btn-lg.presentation-close(href="#main") Close
+  img#slide(src="#{'/presentation/'+data.id+'/slide-'+page+'-small.jpg'}")
+#footer
+  .container.presentation-nav
+    - if(page==1)
+      span.glyphicon.glyphicon-fast-backward
+      span.glyphicon.glyphicon-step-backward
+    else
+      a(href="#{'#item/'+data.id+'/1'}").glyphicon.glyphicon-fast-backward
+      a(href="#{'#item/'+data.id+'/'+(page-1)}").glyphicon.glyphicon-step-backward
+    input(value="#{page}",id="page",maxlength="3")
+    - if(page==data.slidesCount)
+      span.glyphicon.glyphicon-step-forward
+      span.glyphicon.glyphicon-fast-forward
+    - else
+      a(href="#{'#item/'+data.id+'/'+(page+1)}").glyphicon.glyphicon-step-forward
+      a(href="#{'#item/'+data.id+'/'+data.slidesCount}").glyphicon.glyphicon-fast-forward
+</script>
